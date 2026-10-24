@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Dashboard | Stock Price Predictor</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-dark">
+
+    <!-- Top Navigation Bar -->
+    <nav class="fintech-nav mb-4">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('home') }}" class="nav-brand">
+                <div class="brand-icon-box">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <span>Stock<span class="gradient-text-primary">Predict</span></span>
+            </a>
+
+            <!-- User Info & Logout -->
+            <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-2 px-3 py-1 rounded-pill" style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle);">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 28px; height: 28px; background: var(--primary-gradient); font-size: 0.8rem;">
+                        {{ username[0]|upper if username else 'U' }}
+                    </div>
+                    <span class="small fw-semibold text-white">{{ username }}</span>
+                </div>
+                <a href="{{ url_for('logout') }}" class="btn-fintech-danger">
+                    <i class="fas fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-3">
+
+        <!-- Header Banner -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+            <div>
+                <div class="badge-pill badge-live mb-2">
+                    <span class="pulse-dot"></span>
+                    Terminal Active
+                </div>
+                <h1 class="h2 fw-bold text-white mb-1">Stock Price Predictor</h1>
+                <p class="text-secondary small mb-0">Welcome, {{ username }}! Input intraday OHLC market metrics to generate the machine-learned Close price forecast.</p>
+            </div>
+            <div>
+                <a href="{{ url_for('home') }}" class="btn-fintech-outline btn-sm">
+                    <i class="fas fa-home me-1"></i> Home
+                </a>
+            </div>
+        </div>
+
+        <!-- Metric Stat Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <span class="stat-label">Model Architecture</span>
+                    <span class="stat-value text-white fs-4">Linear Reg</span>
+                    <span class="stat-trend"><i class="fas fa-microchip"></i> Supervised Time Series</span>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <span class="stat-label">Coefficient of Determination</span>
+                    <span class="stat-value text-success fs-4">99.53% (R²)</span>
+                    <span class="stat-trend"><i class="fas fa-chart-line"></i> High Precision Fit</span>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <span class="stat-label">Root Mean Sq Error</span>
+                    <span class="stat-value fs-4 font-monospace">7.972</span>
+                    <span class="stat-trend"><i class="fas fa-check"></i> Low Residual Drift</span>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <span class="stat-label">Target Metric</span>
+                    <span class="stat-value text-info fs-4">Close (₹)</span>
+                    <span class="stat-trend"><i class="fas fa-indian-rupee-sign"></i> Multi-Variable Input</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Workspace -->
+        <div class="row g-4">
+            
+            <!-- Prediction Form Column -->
+            <div class="col-lg-5">
+                <div class="glass-card p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-secondary border-opacity-25">
+                        <h4 class="fw-bold text-white mb-0 fs-5">
+                            <i class="fas fa-sliders text-primary me-2"></i>Enter Market Inputs
+                        </h4>
+                        <span class="badge bg-secondary bg-opacity-25 text-white small">OHLC + Vol</span>
+                    </div>
+
+                    <form action="{{ url_for('dashboard') }}" method="post" id="predictionForm">
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="Open">
+                                <i class="fas fa-chart-bar text-primary me-1"></i> Opening Price (₹)
+                            </label>
+                            <input type="number" step="any" name="Open" id="Open" placeholder="e.g. 1550.00" class="form-control-fintech font-monospace" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="High">
+                                <i class="fas fa-arrow-trend-up text-success me-1"></i> Highest Day Price (₹)
+                            </label>
+                            <input type="number" step="any" name="High" id="High" placeholder="e.g. 1575.50" class="form-control-fintech font-monospace" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="Low">
+                                <i class="fas fa-arrow-trend-down text-danger me-1"></i> Lowest Day Price (₹)
+                            </label>
+                            <input type="number" step="any" name="Low" id="Low" placeholder="e.g. 1540.20" class="form-control-fintech font-monospace" required>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label class="form-label" for="Volume">
+                                <i class="fas fa-database text-warning me-1"></i> Trading Volume (Shares)
+                            </label>
+                            <input type="number" step="any" name="Volume" id="Volume" placeholder="e.g. 1500000" class="form-control-fintech font-monospace" required>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn-fintech-success w-100">
+                                <i class="fas fa-bolt"></i>
+                                <span>Calculate Forecast</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Quick Preset Helper -->
+                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-center">
+                        <small class="text-muted d-block mb-2">Quick Test Preset:</small>
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-light px-3" onclick="fillSample()">
+                            <i class="fas fa-wand-magic-sparkles me-1 text-info"></i> Fill Sample Values
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction Result & Visualization Column -->
+            <div class="col-lg-7">
+                <div class="d-flex flex-column gap-4">
+
+                    <!-- Prediction Output Card -->
+                    {% if prediction_text %}
+                    <div class="prediction-result-card">
+                        <div class="badge-pill badge-live mb-2">
+                            <i class="fas fa-circle-check"></i> Forecast Generated Successfully
+                        </div>
+                        <div class="text-secondary small text-uppercase tracking-wider">Inference Result</div>
+                        <div class="prediction-price-display">
+                            {{ prediction_text }}
+                        </div>
+                        <p class="text-secondary small mb-0">
+                            Estimated closing price calculated using multi-variable linear regression equation fitted on historical market trading data.
+                        </p>
+                    </div>
+                    {% else %}
+                    <div class="glass-card p-4 text-center">
+                        <div class="brand-icon-box mx-auto mb-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-chart-simple"></i>
+                        </div>
+                        <h5 class="fw-bold text-white mb-2">Awaiting Parameters</h5>
+                        <p class="text-secondary small mb-0" style="max-width: 420px; margin: auto;">
+                            Enter the Opening, Highest, Lowest price and Trading Volume on the left, then click <strong>Calculate Forecast</strong> to view the model's predicted stock price.
+                        </p>
+                    </div>
+                    {% endif %}
+
+                    <!-- Actual vs Predicted Model Chart -->
+                    <div class="glass-card p-4">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h5 class="fw-bold text-white mb-0 fs-6">
+                                <i class="fas fa-chart-area text-info me-2"></i>Actual vs Predicted Trend Validation
+                            </h5>
+                            <span class="badge bg-success bg-opacity-25 text-success small">Test Set (20%)</span>
+                        </div>
+                        <img src="/static/image/stock_chart.png" onerror="this.src='/actual_vs_predicted.png'" class="img-fluid rounded-3 border border-secondary border-opacity-25 w-100" alt="Model Evaluation Chart">
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 text-muted small">
+                            <span><i class="fas fa-circle text-primary me-1"></i> Blue: Actual Close</span>
+                            <span><i class="fas fa-circle text-danger me-1"></i> Red: Model Forecast</span>
+                            <span class="font-monospace text-white">R² = 99.53%</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="fintech-footer mt-5">
+        <div class="container text-center text-muted small">
+            <p class="mb-1">Stock Price Predictor © 2025 • Time Series Linear Regression Engine</p>
+            <p class="mb-0 text-muted opacity-75">AI23521: Build and Deploy for Machine Learning Application</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function fillSample() {
+            document.getElementById('Open').value = 1550.00;
+            document.getElementById('High').value = 1575.50;
+            document.getElementById('Low').value = 1540.20;
+            document.getElementById('Volume').value = 1500000;
+        }
+    </script>
+</body>
+</html>

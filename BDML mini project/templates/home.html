@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction | AI Time Series Forecasting</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <!-- Professional Navbar -->
+    <nav class="fintech-nav">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('home') }}" class="nav-brand">
+                <div class="brand-icon-box">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <span>Stock<span class="gradient-text-primary">Predict</span></span>
+            </a>
+
+            <ul class="nav-links d-none d-md-flex">
+                <li><a href="{{ url_for('home') }}" class="active">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="{{ url_for('login') }}" class="btn-fintech-primary d-none d-sm-inline-flex">
+                    <span>Get Started</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-5">
+        <div class="container py-lg-5">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <div class="badge-pill badge-ai mb-3">
+                        <span class="pulse-dot"></span>
+                        AI-Powered Linear Regression Model
+                    </div>
+                    <h1 class="display-4 fw-bolder mb-3">
+                        Predict Future <br>
+                        <span class="gradient-text-primary">Stock Price Trends</span> with Precision
+                    </h1>
+                    <p class="lead text-secondary mb-4">
+                        Leverage machine learning algorithms to forecast stock values from key market indicators including Open, High, Low, and Volume data in real time.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="{{ url_for('login') }}" class="btn-fintech-primary btn-lg">
+                            <span>Launch Predictor</span>
+                            <i class="fas fa-arrow-trend-up"></i>
+                        </a>
+                        <a href="{{ url_for('register') }}" class="btn-fintech-outline btn-lg">
+                            <span>Create Account</span>
+                            <i class="fas fa-user-plus"></i>
+                        </a>
+                    </div>
+
+                    <!-- Micro Metrics Bar -->
+                    <div class="d-flex gap-4 mt-5 pt-3 border-top border-secondary border-opacity-25">
+                        <div>
+                            <div class="fw-bold text-white fs-4 font-monospace">99.53%</div>
+                            <small class="text-muted">Model Accuracy (R²)</small>
+                        </div>
+                        <div>
+                            <div class="fw-bold text-white fs-4 font-monospace">7.97</div>
+                            <small class="text-muted">RMSE Score</small>
+                        </div>
+                        <div>
+                            <div class="fw-bold text-white fs-4 font-monospace">&lt; 50ms</div>
+                            <small class="text-muted">Inference Latency</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 text-center">
+                    <div class="position-relative">
+                        <img src="/static/image/stock.png" alt="Stock Market AI Chart" class="img-fluid rounded-4 shadow-lg border border-secondary border-opacity-25 floating-element">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Metrics Ribbon -->
+    <section class="py-4 border-top border-bottom border-secondary border-opacity-25 bg-black bg-opacity-25">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <span class="stat-label">Algorithm</span>
+                        <span class="stat-value text-primary fs-3">Linear Reg</span>
+                        <span class="stat-trend"><i class="fas fa-check-circle"></i> Time-Series</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <span class="stat-label">Training Size</span>
+                        <span class="stat-value fs-3">500 Days</span>
+                        <span class="stat-trend"><i class="fas fa-database"></i> Historical OHLC</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <span class="stat-label">Model Accuracy</span>
+                        <span class="stat-value text-success fs-3">99.53%</span>
+                        <span class="stat-trend"><i class="fas fa-arrow-up"></i> High Precision</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <span class="stat-label">MSE Metric</span>
+                        <span class="stat-value fs-3">63.55</span>
+                        <span class="stat-trend"><i class="fas fa-shield-alt"></i> Low Variance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5 my-5" id="features">
+        <div class="container">
+            <div class="text-center max-w-700 mx-auto mb-5">
+                <div class="badge-pill badge-ai mb-2">Capabilities</div>
+                <h2 class="display-6 fw-bold">Built for Traders & Machine Learning Researchers</h2>
+                <p class="text-secondary">Engineered with statistical rigor and modern responsive web interfaces.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="brand-icon-box mb-4">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Accurate Predictions</h4>
+                        <p class="text-secondary mb-0">Our trained Linear Regression engine models price trends from historical Open, High, Low, and Volume parameters with minimal residual loss.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="brand-icon-box mb-4">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Real-Time Inference</h4>
+                        <p class="text-secondary mb-0">Instantaneous prediction calculation directly from the web browser. Feed your intraday figures and obtain immediate forecast estimates.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="brand-icon-box mb-4">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Secure & User-Friendly</h4>
+                        <p class="text-secondary mb-0">Equipped with user authentication, encrypted session management, SQLite persistence, and an intuitive prediction workspace.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-5 my-5" id="about">
+        <div class="container">
+            <div class="glass-card p-5">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6">
+                        <div class="badge-pill badge-ai mb-2">About The Project</div>
+                        <h2 class="display-6 fw-bold mb-4">Time Series-Based Stock Price Forecasting</h2>
+                        <p class="text-secondary">
+                            Stock Price Prediction estimates future equity values using supervised machine learning. By utilizing multi-feature indicators—Opening price, Day High, Day Low, and Trading Volume—the model maps complex intraday dynamics to the eventual Close price.
+                        </p>
+                        <p class="text-secondary">
+                            Designed as part of <strong>AI23521: Build and Deploy for Machine Learning Application</strong>, this tool provides a complete end-to-end pipeline from time-series preprocessing and train-test evaluation to cloud-ready web deployment.
+                        </p>
+                        <div class="d-flex gap-3 mt-4">
+                            <a href="{{ url_for('login') }}" class="btn-fintech-primary">
+                                <span>Access Prediction Terminal</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="/static/image/stock_chart.png" onerror="this.src='/static/image/stock_llllll.png'" class="img-fluid rounded-4 shadow border border-secondary border-opacity-25" alt="Model Evaluation Chart">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="fintech-footer">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div class="d-flex align-items-center gap-2">
+                <div class="brand-icon-box" style="width: 32px; height: 32px; font-size: 0.9rem;">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <span class="text-white fw-bold">StockPredict</span>
+                <span class="text-muted ms-2">© 2025 AI23521 Lab Mini Project</span>
+            </div>
+            <div class="d-flex gap-4">
+                <a href="#features" class="text-muted text-decoration-none">Features</a>
+                <a href="#about" class="text-muted text-decoration-none">About</a>
+                <a href="{{ url_for('login') }}" class="text-muted text-decoration-none">Sign In</a>
+                <a href="{{ url_for('register') }}" class="text-muted text-decoration-none">Register</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
